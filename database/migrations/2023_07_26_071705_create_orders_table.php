@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,13 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('mobile');
-            $table->string('otp');
-            $table->foreignId("role_id")->nullable()->constrained()->onDelete("null");
-            $table->rememberToken();
+            $table->unsignedInteger('actual_sum');
+            $table->unsignedInteger('received_sum');
+            $table->foreignId('branch_id')->constrained()->cascadeOnDelete();
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('orders');
     }
 };
