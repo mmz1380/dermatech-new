@@ -44,4 +44,9 @@ class Order extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function report(): HasMany
+    {
+        return $this->hasMany(Report::class);
+    }
 }
